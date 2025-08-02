@@ -12,7 +12,7 @@
 	<artifactId>SecurityMarginofSpringBoot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>SecurityMarginofSpringBoot</name>
-	<description>this is not the make a real applications this is just make make this security backend for learning this spring security !!</description>
+	<description>this is not the make a real applications this is just make make this security backend for learning this spring security !! the database is postgresql </description>
 	<url/>
 	<licenses>
 		<license/>

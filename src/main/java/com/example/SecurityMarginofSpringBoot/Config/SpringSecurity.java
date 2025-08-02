@@ -8,9 +8,11 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -29,22 +31,22 @@ public class SpringSecurity {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 
-//        http.csrf(customizer-> customizer.disable());
-//        http.authorizeHttpRequests(request-> request.anyRequest().authenticated());
-//        http.formLogin(Customizer.withDefaults());
-//        http.httpBasic(Customizer.withDefaults());
-//        http.sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        http.csrf(customizer-> customizer.disable());
+        http.authorizeHttpRequests(request-> request.anyRequest().authenticated());
+        http.formLogin(Customizer.withDefaults());
+        http.httpBasic(Customizer.withDefaults());
+        http.sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        Customizer<CsrfConfigurer<HttpSecurity>> custCsrt= new Customizer<CsrfConfigurer<HttpSecurity>>() {
-            @Override
-            public void customize(CsrfConfigurer<HttpSecurity> httpSecurityCsrfConfigurer) {
+//        Customizer<CsrfConfigurer<HttpSecurity>> custCsrt= new Customizer<CsrfConfigurer<HttpSecurity>>() {
+//            @Override
+//            public void customize(CsrfConfigurer<HttpSecurity> httpSecurityCsrfConfigurer) {
+//
+//                httpSecurityCsrfConfigurer.disable();
+//
+//            }
+//        };
 
-                httpSecurityCsrfConfigurer.disable();
-
-            }
-        };
-
-        http.csrf(custCsrt);
+//        http.csrf(custCsrt);
 
         return http.build();
 
@@ -69,8 +71,13 @@ public class SpringSecurity {
     @Bean
     public AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider provider= new DaoAuthenticationProvider();
-        provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
+        // when i use this then don't use the normal password !!
+        //provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
+        // this for use normal password !!-->
+        provider.setPasswordEncoder(new BCryptPasswordEncoder(12));
         provider.setUserDetailsService(userDetailsService);
         return provider;
     }
 }
+
+//fix the bugs the problem is when enter the vaild password the postman say unauthorized 401 !!! the problem in Springsecurity --> line 75 and 77 
