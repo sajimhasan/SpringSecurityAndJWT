@@ -1,4 +1,4 @@
-package com.example.SecurityMarginofSpringBoot;
+package com.example.SecurityMarginofSpringBoot.Controller;
 
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,6 +15,10 @@ public class controller {
     public CsrfToken getCsrfToken(HttpServletRequest request){
         return (CsrfToken) request.getAttribute("_csrf");
     }
+     @GetMapping("/data")
+    public String normal(){
+        return "This is not main this is normal object !!";
+     }
 
 
 }
