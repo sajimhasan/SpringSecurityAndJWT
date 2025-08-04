@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth")
 public class UserController {
 
     @Autowired
@@ -20,9 +19,15 @@ public class UserController {
     private BCryptPasswordEncoder encoder= new BCryptPasswordEncoder(12);
 
 
-    @PostMapping("/registations")
+    @PostMapping("/registration")
     public Users createuser(@RequestBody Users users){
         users.setPassword(encoder.encode(users.getPassword()));
         return userService.makeusers(users);
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestBody Users users){
+        System.out.println(users);
+        return userService.varify(users);
     }
 }
