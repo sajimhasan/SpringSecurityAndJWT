@@ -53,7 +53,7 @@ private String secretKey ="";
         return "";
     }
 
-    public boolean vaildatetoken(String token, UserDetails userDetails) {
+    public boolean validateToken(String token, UserDetails userDetails) {
         return true;
 
     }

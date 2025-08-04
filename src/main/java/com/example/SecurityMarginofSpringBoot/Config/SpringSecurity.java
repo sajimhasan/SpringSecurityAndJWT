@@ -43,7 +43,7 @@ public class SpringSecurity {
                     .authorizeHttpRequests(request -> request
                             .requestMatchers("/registration", "/login").permitAll()
                             .anyRequest().authenticated())
-                    .httpBasic(Customizer.withDefaults())
+//                    .httpBasic(Customizer.withDefaults())
                     .sessionManagement(session -> session
                             .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                     .addFilterBefore(jwtfilter , UsernamePasswordAuthenticationFilter.class)
@@ -95,6 +95,7 @@ public class SpringSecurity {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception{
         return config.getAuthenticationManager();
+
     }
 }
 
